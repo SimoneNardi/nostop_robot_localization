@@ -396,6 +396,9 @@ namespace RobotLocalization
 
       gpsOdom.header.frame_id = worldFrameId_;
       gpsOdom.header.stamp = gpsUpdateTime_;
+      // TEST
+      gpsOdom.child_frame_id = baseLinkFrameId_;
+
 
       // Mark this GPS as used
       gpsUpdated_ = false;

@@ -78,6 +78,14 @@ catkin_package(
 ###########
 ## Build ##
 ###########
+set(published_test_node_SOURCES
+        src/published_test_node.cpp
+
+)
+add_executable(published_test_node ${published_test_node_SOURCES})
+add_dependencies(published_test_node nostop_robot_localization_gencpp)
+target_link_libraries(published_test_node ${catkin_LIBRARIES} ${OpenCV_LIBS} base_math lemon nostop_agent nostop_learning )#${PCL_LIBRARIES})
+
 
 include_directories(include ${catkin_INCLUDE_DIRS} ${EIGEN3_INCLUDE_DIRS})
 
