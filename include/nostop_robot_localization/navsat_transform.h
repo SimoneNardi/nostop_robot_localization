@@ -34,7 +34,6 @@
 #define ROBOT_LOCALIZATION_NAVSAT_TRANSFORM_H
 
 #include "nostop_robot_localization/SetDatum.h"
-
 #include <ros/ros.h>
 
 #include <nav_msgs/Odometry.h>
