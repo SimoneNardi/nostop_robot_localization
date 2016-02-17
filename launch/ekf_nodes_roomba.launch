@@ -1,6 +1,5 @@
 <!-- EKF NODE + NAVSAT NODE + EKF NODE-->
-<!-- imu e odom from gazebo (re-published from publish_test_node to adjoint frame_id),
-      gps from publish_test_node -->
+
 <launch>
   
 <!-- EKF WITH ODOM AND IMU -->
@@ -16,16 +15,16 @@
       <param name="odom0" value="/roomba/red_blue/odom"/>
       <param name="imu0" value="/red_blue/imu_data"/>
       <rosparam param="odom0_config">[false, false, false, 
-				      false, false, false, 
-				      true, true, false, 
-				      false, false, true,
-				      false, false, false]</rosparam>
+                                      false, false, false, 
+                                      true, true, false, 
+                                      false, false, true,
+                                      false, false, false]</rosparam>
 
       <rosparam param="imu0_config">[false, false, false, 
-				      false, false, true, 
-				      false, false, false, 
-				      false, false, true,
-				      true, false, false]</rosparam>
+                                     false, false, true, 
+                                     false, false, false, 
+                                     false, false, true,
+                                     true, false, false]</rosparam>
       <param name="odom0_differential" value="false"/>
       <param name="imu0_differential" value="false"/>
       <param name="odom0_relative" value="false"/>
