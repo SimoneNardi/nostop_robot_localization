@@ -12,15 +12,15 @@
      <param name="debug" value="false"/>
      <param name="transform_time_offset" value="0.0"/>
      <param name="odom0" value="/red_blue/local_ekf_output"/>  
-     <!--param name="odom1" value="/red_blue/odom_from_gps"/>
-     <param name="imu0" value="/red_blue/imu_data"/-->
+     <param name="odom1" value="/red_blue/odom_from_gps"/>
+     <param name="imu0" value="/red_blue/imu_data"/>
       <rosparam param="odom0_config">[false, false, false, 
                                       false, false, true, 
                                       true, true, false, 
                                       false, false, true,
                                       false, false, false]</rosparam>
                                 
-      <!--rosparam param="odom1_config">[true, true, false, 
+      <rosparam param="odom1_config">[true, true, false, 
                                false, false, false, 
                                false, false, false, 
                                false, false, false,
@@ -32,14 +32,14 @@
                                false, false, false, 
                                false, false, false, 
                                false, false, true,
-                               false, false, false]</rosparam-->
+                               false, false, false]</rosparam>
                                
     <param name="odom0_differential" value="false"/>
-      <!--param name="odom1_differential" value="false"/>
-      <param name="imu0_differential" value="false"/-->
+      <param name="odom1_differential" value="false"/>
+      <param name="imu0_differential" value="false"/>
       <param name="odom0_relative" value="false"/>
-      <!--param name="odom1_relative" value="false"/>
-      <param name="imu0_relative" value="false"/-->
+      <param name="odom1_relative" value="false"/>
+      <param name="imu0_relative" value="false"/>
       <param name="imu0_remove_gravitational_acceleration" value="false"/>
      <rosparam param="process_noise_covariance">[0.05, 0,    0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
                                                   0,    0.05, 0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0,

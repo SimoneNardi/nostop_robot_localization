@@ -1,6 +1,6 @@
 <!-- local -->
 <launch>
-  
+
 <!-- EKF WITH ODOM AND IMU -->
   <node pkg="nostop_robot_localization" type="ekf_localization_node" name="ekf_local_roomba" clear_params="true">
       <param name="frequency" value="50"/>
@@ -67,5 +67,7 @@
       <!--  Placeholder for output topic remapping-->
       <remap from="odometry/filtered" to="/red_blue/local_ekf_output"/>
     </node>
-     <include file="$(find irobotcreate2)/launch/tf_static_red_blue.launch"/>
+    
+     <include file="$(find irobotcreate2)/launch/roomba/tf_static_red_blue.launch"/>
+
 </launch>
