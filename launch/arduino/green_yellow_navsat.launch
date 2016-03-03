@@ -1,0 +1,26 @@
+<!-- only navsat -->
+
+<launch>
+    <!-- NAVSAT TRANSFORM NODE -->
+    <node pkg="nostop_robot_localization" type="navsat_transform_node" name="navsat_node_arduino" respawn="true">
+
+      <param name="magnetic_declination_radians" value="0.04"/><!-- todo -->
+      <param name="yaw_offset" value="1.57"/>
+      <param name="use_odometry_yaw" value="false"/>
+      <param name="zero_altitude" value="true"/>
+      <param name="wait_for_datum" value="true"/>
+      <param name="SRworld_lat0" value="47.720765588051"/><!-- degrees--><!-- in [-90,90] -->
+      <param name="SRworld_lon0" value="10.3904406074435"/><!-- degrees-->
+      <rosparam param="datum"> ["47.720765588051", "10.3904406074435", -1.57 ,"SRworld","green_yellow/base_link"]</rosparam>
+      <param name="delay" value="0"/>
+      <param name="debug" value="false"/>
+       <!--  Placeholder for input topic remapping-->
+       <!--remap from="don't touch" to="my_topic" /-->
+<!--       <remap from="/imu/data" to="/green_yellow/fake_imu_data" /> -->
+      <remap from="/gps/fix" to="/green_yellow/localizer/gps/fix" />
+      <remap from="/odometry/filtered" to="/green_yellow/localizer/odometry/final"/>
+       <!-- Placeholders for output remapping. -->
+      <remap from="/odometry/gps" to="/green_yellow/odom_from_gps"/>
+      <remap from="/gps/filtered" to="/gps_filtered"/> 
+    </node>
+</launch>
