@@ -68,6 +68,6 @@
       <remap from="odometry/filtered" to="/red_blue/local_ekf_output"/>
     </node>
     
-     <include file="$(find irobotcreate2)/launch/roomba/tf_static_red_blue.launch"/>
+     <include file="$(find nostop_imu_reading)/launch/tf_static_red_blue.launch"/>
 
 </launch>
