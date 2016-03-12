@@ -548,6 +548,9 @@ template<class T> class RosFilter
     //! @brief tf frame name that is the parent frame of the transform that this node will calculate and broadcast.
     //!
     std::string worldFrameId_;
+    
+    //ADJOINT (Niko) 12-03-2016
+    bool publish_transform;
 };
 
 }  // namespace RobotLocalization
