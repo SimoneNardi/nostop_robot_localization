@@ -525,9 +525,6 @@ namespace RobotLocalization
                    "and base_link_frame must be unique");
 
     
-    //TEST (Niko) 12-03-2016
-    nhLocal_.param("publish_transform",publish_transform,true);
-    
     
     // Try to resolve tf_prefix
     std::string tfPrefix = "";
@@ -1550,7 +1547,7 @@ namespace RobotLocalization
       // Get latest state and publish it
       nav_msgs::Odometry filteredPosition;
 
-      if (getFilteredOdometryMessage(filteredPosition) && publish_transform)//TEST 12-03-2016
+      if (getFilteredOdometryMessage(filteredPosition))
       {
         worldBaseLinkTransMsg_.header.stamp = filteredPosition.header.stamp + tfTimeOffset_;
         worldBaseLinkTransMsg_.header.frame_id = filteredPosition.header.frame_id;

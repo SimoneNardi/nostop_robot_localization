@@ -549,8 +549,6 @@ template<class T> class RosFilter
     //!
     std::string worldFrameId_;
     
-    //ADJOINT (Niko) 12-03-2016
-    bool publish_transform;
 };
 
 }  // namespace RobotLocalization
