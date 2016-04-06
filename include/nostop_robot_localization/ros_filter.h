@@ -52,6 +52,7 @@
 #include <diagnostic_updater/diagnostic_updater.h>
 #include <diagnostic_updater/publisher.h>
 #include <diagnostic_msgs/DiagnosticStatus.h>
+#include <std_msgs/Float64.h>
 
 #include <XmlRpcException.h>
 
@@ -187,6 +188,8 @@ template<class T> class RosFilter
                       const bool imuData,
                       const double mahalanobisThresh);
 
+    void initializationCallback(const std_msgs::Float64::ConstPtr &unused);
+    
     //! @brief Main run method
     //!
     void run();
@@ -494,7 +497,9 @@ template<class T> class RosFilter
     //! type is geometry_msgs/PoseWithCovarianceStamped.
     //!
     ros::Subscriber setPoseSub_;
-
+    
+    ros::Subscriber initializationSub_;
+    
     //! @brief Service that allows another node to change the current state and recieve a confirmation. Uses
     //! a custom SetPose service.
     //!
@@ -549,6 +554,7 @@ template<class T> class RosFilter
     //!
     std::string worldFrameId_;
     
+    bool m_publisher_enable;
 };
 
 }  // namespace RobotLocalization

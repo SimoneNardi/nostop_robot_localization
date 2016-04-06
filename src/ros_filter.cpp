@@ -55,7 +55,8 @@ namespace RobotLocalization
       lastSetPoseTime_(0),
       nhLocal_("~"),
       printDiagnostics_(true),
-      twoDMode_(false)
+      twoDMode_(false),
+      m_publisher_enable(false)
   {
     stateVariableNames_.push_back("X");
     stateVariableNames_.push_back("Y");
@@ -525,6 +526,13 @@ namespace RobotLocalization
                    "and base_link_frame must be unique");
 
     
+    std::cout << "ekf sottoscritto - start!"<<std::endl;
+    initializationSub_ = nh_.subscribe<std_msgs::Float64>("initialization",
+							 1,
+                                                         &RosFilter<T>::initializationCallback,
+                                                         this);
+    std::cout << "ekf sottoscritto - end!"<<std::endl;
+    
     
     // Try to resolve tf_prefix
     std::string tfPrefix = "";
@@ -571,6 +579,13 @@ namespace RobotLocalization
                                                                           1,
                                                                           &RosFilter<T>::setPoseCallback,
                                                                           this);
+    
+//     std::cout << "ekf sottoscritto - start!"<<std::endl;
+//     initializationSub_ = nh_.subscribe<std_msgs::Float64>("initialization",
+// 							 1,
+//                                                          &RosFilter<T>::initializationCallback,
+//                                                          this);
+//     std::cout << "ekf sottoscritto - end!"<<std::endl;
 
     // Create a service for manually setting/resetting pose
     setPoseSrv_ = nh_.advertiseService("set_pose", &RosFilter<T>::setPoseSrvCallback, this);
@@ -1500,6 +1515,8 @@ namespace RobotLocalization
   {
     ros::Time::init();
 
+    std::cout<<"************************ sono dentro al run"<<std::endl;
+
     loadParams();
 
     if (printDiagnostics_)
@@ -1613,7 +1630,8 @@ namespace RobotLocalization
         }
 
         // Fire off the position and the transform
-        positionPub.publish(filteredPosition);
+        if(m_publisher_enable)
+	  positionPub.publish(filteredPosition);
 
         if (printDiagnostics_)
         {
@@ -1641,10 +1659,18 @@ namespace RobotLocalization
   }
 
   template<typename T>
+  void RosFilter<T>::initializationCallback(const std_msgs::Float64::ConstPtr &unused)
+  {
+    std::cout << "------------------ ekf sbloccato!"<<std::endl;
+    if(!m_publisher_enable)
+      m_publisher_enable = true;
+  }
+  
+  template<typename T>
   void RosFilter<T>::setPoseCallback(const geometry_msgs::PoseWithCovarianceStamped::ConstPtr &msg)
   {
     RF_DEBUG("------ RosFilter::setPoseCallback ------\nPose message:\n" << *msg);
-
+   
     std::string topicName("setPose");
 
     // Get rid of any initial poses (pretend we've never had a measurement)
