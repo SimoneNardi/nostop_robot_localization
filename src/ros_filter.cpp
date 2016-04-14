@@ -525,14 +525,10 @@ namespace RobotLocalization
                    "Invalid frame configuration! The values for map_frame, odom_frame, "
                    "and base_link_frame must be unique");
 
-    
-    std::cout << "ekf sottoscritto - start!"<<std::endl;
     initializationSub_ = nh_.subscribe<std_msgs::Float64>("initialization",
 							 1,
                                                          &RosFilter<T>::initializationCallback,
                                                          this);
-    std::cout << "ekf sottoscritto - end!"<<std::endl;
-    
     
     // Try to resolve tf_prefix
     std::string tfPrefix = "";
@@ -579,13 +575,6 @@ namespace RobotLocalization
                                                                           1,
                                                                           &RosFilter<T>::setPoseCallback,
                                                                           this);
-    
-//     std::cout << "ekf sottoscritto - start!"<<std::endl;
-//     initializationSub_ = nh_.subscribe<std_msgs::Float64>("initialization",
-// 							 1,
-//                                                          &RosFilter<T>::initializationCallback,
-//                                                          this);
-//     std::cout << "ekf sottoscritto - end!"<<std::endl;
 
     // Create a service for manually setting/resetting pose
     setPoseSrv_ = nh_.advertiseService("set_pose", &RosFilter<T>::setPoseSrvCallback, this);
@@ -1515,8 +1504,6 @@ namespace RobotLocalization
   {
     ros::Time::init();
 
-    std::cout<<"************************ sono dentro al run"<<std::endl;
-
     loadParams();
 
     if (printDiagnostics_)
@@ -1549,6 +1536,8 @@ namespace RobotLocalization
     ros::Publisher positionPub = nh_.advertise<nav_msgs::Odometry>("odometry/filtered", 20);
     tf2_ros::TransformBroadcaster worldTransformBroadcaster;
 
+    ros::Publisher enablePub = nh_.advertise<std_msgs::String>("Filtro/Stato", 1);
+    
     ros::Rate loop_rate(frequency_);
 
     while (ros::ok())
@@ -1556,7 +1545,15 @@ namespace RobotLocalization
       // The spin will call all the available callbacks and enqueue
       // their received measurements
       ros::spinOnce();
-
+      
+      std_msgs::String l_status;
+      if(m_publisher_enable)
+	l_status.data = "Abilitato";
+      else
+	l_status.data = "Non Abilitato";
+	
+      enablePub.publish<std_msgs::String>( l_status );
+      
       // Now we'll integrate any measurements we've received
       ros::Time curTime = ros::Time::now();
       integrateMeasurements(ros::Time::now().toSec());
@@ -1661,7 +1658,6 @@ namespace RobotLocalization
   template<typename T>
   void RosFilter<T>::initializationCallback(const std_msgs::Float64::ConstPtr &unused)
   {
-    std::cout << "------------------ ekf sbloccato!"<<std::endl;
     if(!m_publisher_enable)
       m_publisher_enable = true;
   }
